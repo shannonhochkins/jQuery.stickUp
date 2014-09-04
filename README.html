@@ -1,0 +1,41 @@
+<h1 id="stuckup">Stuckup</h1>
+<p>This plugin makes sticky menus easy, very lightweight plugin, just does what it says, nothing else! Created by <a href="http://www.shannonhochkins.com/">shannon hochkins</a>.</p>
+<h2 id="usage-options">Usage &amp; Options</h2>
+<pre><code class="lang-javascript">$(&#39;.element&#39;).stickUp({
+    topMargin: null,
+    zIndex: 10,
+    onStick: function(settings) {},
+    unStick: function(settings) {}
+});</code></pre>
+<h2 id="options">Options</h2>
+<table>
+<thead>
+<tr>
+<th>Options</th>
+<th style="text-align:center">Default</th>
+<th style="text-align:right">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>topMargin</td>
+<td style="text-align:center">null</td>
+<td style="text-align:right">An offset param to tell the plugin where the top of the menu is.</td>
+</tr>
+<tr>
+<td>zIndex</td>
+<td style="text-align:center">10</td>
+<td style="text-align:right">The css z-index of the menu to be set when active, when inactive it will reset to it&#39;s original z-index</td>
+</tr>
+<tr>
+<td>onStick</td>
+<td style="text-align:center">null</td>
+<td style="text-align:right">A callback when the menu has been activated or is sticky.</td>
+</tr>
+<tr>
+<td>unStick</td>
+<td style="text-align:center">null</td>
+<td style="text-align:right">A callback when the menu has been inactivated or is not sticky.</td>
+</tr>
+</tbody>
+</table>
