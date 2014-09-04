@@ -54,6 +54,7 @@
 				self.vars.topMargin = (isNaN(self.vars.topMargin) ? 0 : self.vars.topMargin);
 			}
 			self.vars.stickyHeight = parseInt($this.height());
+			self.vars.initialZindex = $this.css('z-index');
 			self.vars.stickyMarginB = parseInt($this.css('margin-bottom'));
 			self.vars.currentMarginT = parseInt($this.next().closest('div').css('margin-top'));
 			self.vars.vartop = parseInt($this.offset().top);
@@ -92,7 +93,7 @@
 						$this.removeClass('isStuck');
 						$this.css({
 							position: "relative",
-							zIndex: 'auto'
+							zIndex: self.vars.initialZindex
 						});
 						// Call the onstick function if set.
 						if (typeof(self.settings.unStick) == 'function') {
