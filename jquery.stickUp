@@ -1,0 +1,160 @@
+// the semi-colon before function invocation is a safety net against concatenated
+// scripts and/or other plugins which may not be closed properly.
+;
+(function($, window, document, undefined) {
+
+	// undefined is used here as the undefined global variable in ECMAScript 3 is
+	// mutable (ie. it can be changed by someone else). undefined isn't really being
+	// passed in so we can ensure the value of it is truly undefined. In ES5, undefined
+	// can no longer be modified.
+
+	// window and document are passed through as local variable rather than global
+	// as this (slightly) quickens the resolution process and can be more efficiently
+	// minified (especially when both are regularly referenced in your plugin).
+
+	// Create the defaults once
+	var pluginName = "stickUp";
+	var defaults = {
+		topMargin: null,
+		parts: null,
+		itemClass: '',
+		itemHover: ''
+	};
+
+	// The actual plugin constructor
+	function Plugin(element, options) {
+
+		// jQuery has an extend method which merges the contents of two or
+		// more objects, storing the result in the first object. The first object
+		// is generally empty as we don't want to alter the default options for
+		// future instances of the plugin
+
+		this.settings = $.extend({}, defaults, options);
+		if ($(element).length > 0 && this.settings.scanItems.length > 0) {
+			this.settings.element = element;
+			this.settings.win = $(window);
+			this.settings.doc = $(document);
+			this.settings.body = $('body');
+			this.settings._defaults = defaults;
+			this.init();
+		}
+	}
+
+	// Avoid Plugin.prototype conflicts
+	$.extend(Plugin.prototype, {
+		init: function() {
+			// adding a class to users div
+			$(this).addClass('stuckMenu');
+			//getting options
+			var objn = 0;
+
+			for (var o in settings.parts) {
+				if (settings.parts.hasOwnProperty(o)) {
+					content[objn] = settings.parts[objn];
+					objn++;
+				}
+			}
+
+
+			itemClass = settings.itemClass;
+			itemHover = settings.itemHover;
+			if (settings.topMargin != null) {
+				if (settings.topMargin == 'auto') {
+					topMargin = parseInt($('.stuckMenu').css('margin-top'));
+				} else {
+					if (isNaN(settings.topMargin) && settings.topMargin.search("px") > 0) {
+						topMargin = parseInt(settings.topMargin.replace("px", ""));
+					} else if (!isNaN(parseInt(settings.topMargin))) {
+						topMargin = parseInt(settings.topMargin);
+					} else {
+						console.log("incorrect argument, ignored.");
+						topMargin = 0;
+					}
+				}
+			} else {
+				topMargin = 0;
+			}
+			menuSize = $('.' + itemClass).size();
+
+			stickyHeight = parseInt($(this).height());
+			stickyMarginB = parseInt($(this).css('margin-bottom'));
+			currentMarginT = parseInt($(this).next().closest('div').css('margin-top'));
+			vartop = parseInt($(this).offset().top);
+		},
+
+		events: function() {
+			// $(window).scroll(function(event) {
+			// 	var st = $(this).scrollTop();
+			// 	if (st > lastScrollTop) {
+			// 		scrollDir = 'down';
+			// 	} else {
+			// 		scrollDir = 'up';
+			// 	}
+			// 	lastScrollTop = st;
+			// });
+			// $(document).on('scroll', function() {
+			// 	varscroll = parseInt($(document).scrollTop());
+			// 	if (menuSize != null) {
+			// 		for (var i = 0; i < menuSize; i++) {
+			// 			contentTop[i] = $('#' + content[i] + '').offset().top;
+
+			// 			function bottomView(i) {
+			// 				contentView = $('#' + content[i] + '').height() * .4;
+			// 				testView = contentTop[i] - contentView;
+			// 				//console.log(varscroll);
+			// 				if (varscroll > testView) {
+			// 					$('.' + itemClass).removeClass(itemHover);
+			// 					$('.' + itemClass + ':eq(' + i + ')').addClass(itemHover);
+			// 				} else if (varscroll < 50) {
+			// 					$('.' + itemClass).removeClass(itemHover);
+			// 					$('.' + itemClass + ':eq(0)').addClass(itemHover);
+			// 				}
+			// 			}
+			// 			if (scrollDir == 'down' && varscroll > contentTop[i] - 50 && varscroll < contentTop[i] + 50) {
+			// 				$('.' + itemClass).removeClass(itemHover);
+			// 				$('.' + itemClass + ':eq(' + i + ')').addClass(itemHover);
+			// 			}
+			// 			if (scrollDir == 'up') {
+			// 				bottomView(i);
+			// 			}
+			// 		}
+			// 	}
+
+
+
+			// 	if (vartop < varscroll + topMargin) {
+			// 		$('.stuckMenu').addClass('isStuck');
+			// 		$('.stuckMenu').next().closest('div').css({
+			// 			'margin-top': stickyHeight + stickyMarginB + currentMarginT + 'px'
+			// 		}, 10);
+			// 		$('.stuckMenu').css("position", "fixed");
+			// 		$('.isStuck').css({
+			// 			top: '0px'
+			// 		}, 10, function() {
+
+			// 		});
+			// 	};
+
+			// 	if (varscroll + topMargin < vartop) {
+			// 		$('.stuckMenu').removeClass('isStuck');
+			// 		$('.stuckMenu').next().closest('div').css({
+			// 			'margin-top': currentMarginT + 'px'
+			// 		}, 10);
+			// 		$('.stuckMenu').css("position", "relative");
+			// 	};
+
+			// });
+		}
+
+
+	});
+
+	// A really lightweight plugin wrapper around the constructor,
+	$.fn[pluginName] = function(options) {
+		this.each(function() {
+			$.data(this, "plugin_" + pluginName, new Plugin(this, options));
+		});
+		return this;
+	};
+
+})(jQuery, window, document);
