@@ -72,8 +72,9 @@
 			// Setup the document scroll event.
 			self.settings.doc.on('scroll', function() {
 				self.vars.varscroll = parseInt(self.settings.doc.scrollTop());
+				var yScroll = self.vars.varscroll + self.vars.topMargin;
 
-				if (self.vars.vartop < self.vars.varscroll + self.vars.topMargin) {
+				if (self.vars.vartop < yScroll) {
 					if (!$this.hasClass('isStuck')) {
 						$this.addClass('isStuck');
 						$this.css({
@@ -88,7 +89,7 @@
 					}
 				};
 
-				if (self.vars.varscroll + self.vars.topMargin < self.vars.vartop) {
+				if (yScroll < self.vars.vartop) {
 					if ($this.hasClass('isStuck')) {
 						$this.removeClass('isStuck');
 						$this.css({
